@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+	tools{
+	      jdk 'JDK21'
+	      maven 'MAVEN_3911'
+     	}
+
+    stages {
+        stage('git clone') {
+            steps {
+			   echo 'git clone'
+               git changelog: false, url: 'https://github.com/sashinfi/ci-vprofile-sample.git'
+            }
+		}
+		stage('Maven Build') {
+        steps {
+                echo 'Maven Build'
+				bat 'mvn clean install'
+            }
+        }
+		stage('Deploy to tomcat server') {
+        steps {
+                echo 'deploy to server'
+				deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: '714ebfd3-7b01-4987-98fb-332f51ee7397', path: '', url: 'http://localhost:9085')], contextPath: '/sashinfi-ci-vprofile1', war: '**/*.war'
+            }
+        }
+		stage('Complete Deployment') {
+        steps {
+                echo 'Complete Deployment'
+            }
+        }
+		
+    }
+}
