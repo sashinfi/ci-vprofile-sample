@@ -11,7 +11,7 @@ LABEL maintainer="sash2017@yahoo.co.in"
 #COPY ./yourapp.war /usr/local/tomcat/webapps/ROOT.war
 COPY ./target/*.war /usr/local/tomcat/webapps/viprofile.war
 
-E#xpose Tomcat port
+#Expose Tomcat port
 EXPOSE 9090
 
 #Start Tomcat server
