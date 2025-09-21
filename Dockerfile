@@ -1,3 +1,18 @@
-FROM tomcat:9.0.85-jdk17-corretto-al2
-# Take the war and copy to webapps of tomcat
-COPY ./target/*.war /usr/local/tomcat/webapps/myweb.war
+#Use official Tomcat base image
+FROM tomcat:10.1.44-jdk17
+
+#Maintainer information (optional)
+LABEL maintainer="sash2017@yahoo.co.in"
+
+#Remove default Tomcat apps (optional, keeps container clean)
+#RUN rm -rf /usr/local/tomcat/webapps/*
+
+#Copy your WAR file into Tomcat webapps directory
+#COPY ./yourapp.war /usr/local/tomcat/webapps/ROOT.war
+COPY ./target/*.war /usr/local/tomcat/webapps/viprofile.war
+
+E#xpose Tomcat port
+EXPOSE 9090
+
+#Start Tomcat server
+CMD ["catalina.sh", "run"]
